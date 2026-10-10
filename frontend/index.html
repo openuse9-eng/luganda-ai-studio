@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luganda AI Studio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main class="container">
+      <header class="hero">
+        <div class="brand-mark">LA</div>
+        <p class="eyebrow">YOUR LANGUAGE. YOUR VOICE.</p>
+        <h1>Luganda AI Studio</h1>
+        <p class="subtitle">Create, speak and transcribe in Luganda — all in one place.</p>
+        <div class="hero-accent"></div>
+      </header>
+      <nav class="quick-nav" aria-label="Studio features">
+          <a href="#voice">🎙️ Voice-over</a>
+            <a href="#speech">🎤 Speech to Text</a>
+              <a href="#transcription">📄 Audio Transcription</a>
+              </nav>
+
+    <section class="card tool-screen" id="voice">
+      <h2>🎙️ Luganda Voice-over</h2>
+
+      <textarea
+        id="text"
+        placeholder="Wandika ekigambo oba obubaka bwo mu Luganda..."
+      ></textarea>
+
+      <label for="voice">Choose Luganda voice:</label>
+
+      <select id="voice">
+        <option value="salt_lug_0001">👩 Female Voice 1</option>
+        <option value="waxal_lug_0002">👩 Female Voice 2</option>
+        <option value="waxal_lug_0003">👩 Female Voice 3</option>
+        <option value="waxal_lug_0004">👨 Male Voice 1</option>
+        <option value="waxal_lug_0005">👩 Female Voice 4</option>
+        <option value="waxal_lug_0006">👨 Male Voice 2</option>
+        <option value="waxal_lug_0007">👨 Male Voice 3</option>
+        <option value="waxal_lug_0008">👩 Female Voice 5</option>
+      </select>
+
+      <button id="speakBtn">Generate Luganda Voice</button>
+
+      <p id="status"></p>
+
+      <audio id="audio" controls></audio>
+    </section>
+
+    <section class="card tool-screen" id="speech">
+      <h2>🎤 Speech to Text</h2>
+
+      <button id="recordBtn">Start Recording</button>
+
+      <p id="recordStatus"></p>
+
+      <textarea
+        id="transcript"
+        placeholder="Your Luganda transcription will appear here..."
+      ></textarea>
+    </section>
+
+    <section class="card tool-screen" id="transcription">
+      <h2>📄 Audio Transcription</h2>
+      <p>Upload a Luganda audio file to convert speech into text.</p>
+
+      <label for="audioFile">Choose an audio file:</label>
+      <input
+        type="file"
+        id="audioFile"
+        accept="audio/*"
+      >
+
+      <button id="transcribeBtn">Transcribe Audio</button>
+
+      <p id="uploadStatus"></p>
+
+      <textarea
+        id="uploadTranscript"
+        placeholder="Your audio transcript will appear here..."
+      ></textarea>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
