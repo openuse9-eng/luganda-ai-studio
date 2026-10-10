@@ -20,7 +20,8 @@
           <a href="#voice">🎙️ Voice-over</a>
             <a href="#speech">🎤 Speech to Text</a>
               <a href="#transcription">📄 Audio Transcription</a>
-              </nav>
+                          <a href="#translation">English / Luganda Translation</a>
+        </nav>
 
     <section class="card tool-screen" id="voice">
       <h2>🎙️ Luganda Voice-over</h2>
@@ -84,7 +85,39 @@
       ></textarea>
     </section>
 
-  </main>
+  
+        <section class="card tool-screen" id="translation">
+            <h2>English / Luganda Translation</h2>
+            <p>Translate between English and Luganda. Please review machine translations for accuracy.</p>
+
+            <label for="sourceLanguage">Translate from:</label>
+            <select id="sourceLanguage">
+                <option value="en">English</option>
+                <option value="lg">Luganda</option>
+            </select>
+
+            <button type="button" id="swapLanguagesBtn">Swap languages</button>
+
+            <label for="targetLanguage">Translate to:</label>
+            <select id="targetLanguage">
+                <option value="lg">Luganda</option>
+                <option value="en">English</option>
+            </select>
+
+            <label for="translationInput">Text to translate:</label>
+            <textarea id="translationInput" placeholder="Type text here..."></textarea>
+
+            <button type="button" id="translateBtn">Translate</button>
+            <p id="translationStatus" role="status" aria-live="polite"></p>
+
+            <label for="translationOutput">Translation:</label>
+            <textarea id="translationOutput" placeholder="Translation appears here..." readonly></textarea>
+
+            <button type="button" id="copyTranslationBtn">Copy translation</button>
+            <button type="button" id="speakTranslationBtn">Speak translation</button>
+        </section>
+
+    </main>
 
   <script src="app.js"></script>
 </body>

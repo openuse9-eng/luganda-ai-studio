@@ -240,3 +240,152 @@ quickNav.querySelectorAll("a").forEach(link => {
 });
 
 homeBtn.addEventListener("click", showHome);
+
+
+// English <-> Luganda translation tool
+(() => {
+    const sourceLanguage = document.getElementById("sourceLanguage");
+    const targetLanguage = document.getElementById("targetLanguage");
+    const input = document.getElementById("translationInput");
+    const output = document.getElementById("translationOutput");
+    const translateBtn = document.getElementById("translateBtn");
+    const swapBtn = document.getElementById("swapLanguagesBtn");
+    const copyBtn = document.getElementById("copyTranslationBtn");
+    const speakBtn = document.getElementById("speakTranslationBtn");
+    const status = document.getElementById("translationStatus");
+
+    if (!sourceLanguage || !targetLanguage || !input || !output) return;
+
+    swapBtn.addEventListener("click", () => {
+        const previousSource = sourceLanguage.value;
+        sourceLanguage.value = targetLanguage.value;
+        targetLanguage.value = previousSource;
+
+        const previousInput = input.value;
+        input.value = output.value;
+        output.value = previousInput;
+        status.textContent = "Languages swapped.";
+    });
+
+    translateBtn.addEventListener("click", async () => {
+        const text = input.value.trim();
+
+        if (!text) {
+            status.textContent = "Enter text to translate.";
+            return;
+        }
+
+        if (sourceLanguage.value === targetLanguage.value) {
+            status.textContent = "Choose two different languages.";
+            return;
+        }
+
+        translateBtn.disabled = true;
+        status.textContent = "Translating...";
+        output.value = "";
+
+        try {
+            const response = await fetch("/api/translate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    text,
+                    sourceLanguage: sourceLanguage.value,
+                    targetLanguage: targetLanguage.value
+                })
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || "Translation failed.");
+            }
+
+            output.value = data.translatedText;
+            status.textContent =
+                "Translation complete. Please review it for accuracy.";
+        } catch (error) {
+            console.error("Translation error:", error);
+            status.textContent = error.message || "Translation failed.";
+        } finally {
+            translateBtn.disabled = false;
+        }
+    });
+
+    copyBtn.addEventListener("click", async () => {
+        if (!output.value.trim()) {
+            status.textContent = "Translate some text first.";
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(output.value);
+            status.textContent = "Translation copied.";
+        } catch (error) {
+            output.focus();
+            output.select();
+            status.textContent =
+                "Automatic copy was blocked. Select the text and copy it manually.";
+        }
+    });
+
+    speakBtn.addEventListener("click", async () => {
+        const text = output.value.trim();
+
+        if (!text) {
+            status.textContent = "Translate some text first.";
+            return;
+        }
+
+        if (targetLanguage.value === "lg") {
+            speakBtn.disabled = true;
+            status.textContent = "Generating Luganda speech...";
+
+            try {
+                const voice =
+                    document.getElementById("voice")?.value || "salt_lug_0001";
+
+                const response = await fetch("/api/tts", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text, voice })
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || "Luganda speech generation failed.");
+                }
+
+                const player = document.getElementById("audio");
+                player.src = data.audio_url;
+                await player.play();
+                status.textContent = "Playing Luganda speech.";
+            } catch (error) {
+                console.error("Luganda speech error:", error);
+                status.textContent =
+                    error.message || "Could not play Luganda speech.";
+            } finally {
+                speakBtn.disabled = false;
+            }
+            return;
+        }
+
+        if (!("speechSynthesis" in window)) {
+            status.textContent = "This browser does not support speech synthesis.";
+            return;
+        }
+
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "en-US";
+        utterance.onstart = () => {
+            status.textContent = "Speaking English translation...";
+        };
+        utterance.onend = () => {
+            status.textContent = "Speech finished.";
+        };
+        utterance.onerror = () => {
+            status.textContent = "The browser could not speak this translation.";
+        };
+        window.speechSynthesis.speak(utterance);
+    });
+})();

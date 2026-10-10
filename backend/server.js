@@ -190,6 +190,93 @@ app.post("/api/stt", upload.single("audio"), async (req, res) => {
   }
 });
 
+
+
+app.post("/api/translate", async (req, res) => {
+  try {
+    const { text, sourceLanguage, targetLanguage } = req.body || {};
+
+    if (typeof text !== "string" || !text.trim()) {
+      return res.status(400).json({
+        error: "Enter text to translate."
+      });
+    }
+
+    if (text.length > 4000) {
+      return res.status(400).json({
+        error: "Please keep the text under 4,000 characters."
+      });
+    }
+
+    const languageCodes = {
+      en: "eng",
+      lg: "lug"
+    };
+
+    if (
+      !languageCodes[sourceLanguage] ||
+      !languageCodes[targetLanguage] ||
+      sourceLanguage === targetLanguage
+    ) {
+      return res.status(400).json({
+        error: "Choose English and Luganda as different languages."
+      });
+    }
+
+    if (!process.env.SUNBIRD_API_KEY) {
+      return res.status(500).json({
+        error: "Sunbird API key is not configured."
+      });
+    }
+
+    const response = await fetch(
+      "https://api.sunbird.ai/tasks/translate",
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${process.env.SUNBIRD_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          text: text.trim(),
+          source_language: languageCodes[sourceLanguage],
+          target_language: languageCodes[targetLanguage]
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Sunbird translation error:", data);
+      return res.status(502).json({
+        error: "Sunbird translation failed. Please try again."
+      });
+    }
+
+    const translatedText = data.output?.translated_text;
+
+    if (typeof translatedText !== "string" || !translatedText.trim()) {
+      console.error("Unexpected Sunbird response:", data);
+      return res.status(502).json({
+        error: "Sunbird returned no translation."
+      });
+    }
+
+    return res.json({
+      translatedText: translatedText.trim(),
+      sourceLanguage,
+      targetLanguage
+    });
+  } catch (error) {
+    console.error("Translation error:", error);
+    return res.status(500).json({
+      error: "Translation failed. Please try again."
+    });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Luganda AI Studio server running on port ${PORT}`);
 });
