@@ -10,6 +10,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Get project files
         uses: actions/checkout@v4
@@ -24,13 +25,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
 
-      - name: Install dependencies
+      - name: Install project dependencies
         run: npm ci
+
+      - name: Install Capacitor
+        run: npm install --no-save @capacitor/core @capacitor/cli @capacitor/android
 
       - name: Create Android project
         run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/android
           npx cap init "Luganda AI Studio" "com.openuse9.lugandaai" --web-dir frontend
           npx cap add android
           npx cap sync android
@@ -38,6 +42,7 @@ jobs:
       - name: Align Kotlin libraries
         run: |
           find android -name "*.gradle" -type f -exec sed -i 's/kotlin-stdlib-jdk7:1.6.21/kotlin-stdlib-jdk7:1.8.22/g; s/kotlin-stdlib-jdk8:1.6.21/kotlin-stdlib-jdk8:1.8.22/g' {} +
+          sed -i '/dependencies {/a\    configurations.configureEach {\n        resolutionStrategy.eachDependency {\n            if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {\n                useVersion "1.8.22"\n            }\n        }\n    }' android/app/build.gradle
 
       - name: Build APK
         run: |
