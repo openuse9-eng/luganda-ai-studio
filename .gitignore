@@ -1,0 +1,7 @@
+node_modules/
+test.wav
+*.before-translation
+*.save
+.env
+.env.*
+!.env.example

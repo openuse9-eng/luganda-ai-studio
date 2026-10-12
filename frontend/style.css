@@ -1,0 +1,493 @@
+:root {
+  --green: #176b45;
+  --green-dark: #104c33;
+  --green-soft: #e7f2e9;
+  --cream: #f6f7f1;
+  --white: #ffffff;
+  --ink: #182820;
+  --muted: #66756b;
+  --border: #dce5dc;
+  --gold: #d8a94e;
+  --radius: 20px;
+  --shadow: 0 8px 28px rgba(27, 58, 39, 0.07);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.55;
+  font-size: 18px;
+}
+
+.container {
+  width: min(100% - 32px, 760px);
+  margin: 0 auto;
+  padding: 34px 0 48px;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(28px, 6vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -1px;
+  font-weight: 800;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 19px;
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin: 8px 0 24px;
+  font-size: 14px;
+}
+
+.card {
+  position: relative;
+  background: var(--white);
+  padding: 24px;
+  margin-top: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 145px;
+  margin: 12px 0;
+  padding: 15px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: #fcfdfb;
+  color: var(--ink);
+  font: inherit;
+  font-size: 18px;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea:focus,
+select:focus,
+input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(23, 107, 69, 0.12);
+  outline: none;
+}
+
+label {
+  display: block;
+  margin: 12px 0 7px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+select,
+input[type="file"] {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fcfdfb;
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  min-height: 49px;
+  margin-top: 14px;
+  padding: 13px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--green);
+  color: white;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+button:hover {
+  background: var(--green-dark);
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+#audio {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+}
+
+#status,
+#recordStatus,
+#uploadStatus {
+  min-height: 22px;
+  margin: 10px 0;
+  color: var(--green-dark);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: min(100% - 22px, 760px);
+    padding-top: 25px;
+    padding-bottom: 30px;
+  }
+
+  .card {
+    padding: 18px;
+    margin-top: 14px;
+    border-radius: 17px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  textarea {
+    min-height: 130px;
+    font-size: 16px;
+  }
+
+  button {
+    min-height: 50px;
+  }
+}
+
+/* Luganda AI Studio — professional brand header */
+.hero {
+  background: linear-gradient(135deg, #123f30, #1d6f42);
+  color: #ffffff;
+  padding: 30px 24px;
+  margin: 0 0 24px;
+  border-radius: 20px;
+  box-shadow: 0 10px 28px rgba(18, 63, 48, 0.18);
+}
+
+.brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid #e6bd62;
+  border-radius: 14px;
+  color: #f4d58b;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 22px;
+}
+
+.hero .eyebrow {
+  color: #f4d58b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0 0 10px;
+}
+
+.hero h1 {
+  color: #ffffff;
+  font-size: clamp(27px, 6vw, 38px);
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+
+.hero .subtitle {
+  color: #e0eee7;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 420px;
+}
+
+.hero-accent {
+  width: 56px;
+  height: 4px;
+  background: #e6bd62;
+  border-radius: 10px;
+  margin-top: 22px;
+}
+
+/* Accessibility: larger, easier-to-read text */
+body {
+  font-size: 18px;
+    line-height: 1.7;
+    }
+
+    .hero .eyebrow {
+      font-size: 14px;
+        letter-spacing: 2px;
+        }
+
+        h1 {
+          font-size: 36px;
+            line-height: 1.25;
+            }
+
+            h2 {
+              font-size: 24px;
+                line-height: 1.4;
+                }
+
+                p,
+                label,
+                select,
+                input,
+                textarea,
+                button {
+                  font-size: 18px;
+                  }
+
+                  textarea {
+                    line-height: 1.7;
+                      min-height: 180px;
+                        padding: 16px;
+                        }
+
+                        select,
+                        input[type="file"] {
+                          min-height: 54px;
+                            padding: 12px;
+                            }
+
+                            button {
+                              min-height: 58px;
+                                padding: 16px;
+                                  font-weight: 700;
+                                  }
+
+                                  .subtitle {
+                                    font-size: 18px;
+                                      line-height: 1.6;
+                                      }
+
+                                      .card {
+                                        padding: 24px;
+                                          margin-top: 24px;
+                                          }
+
+                                          /* Keep text comfortable on smaller phones */
+                                          @media (max-width: 480px) {
+                                            h1 {
+                                                font-size: 32px;
+                                                  }
+
+                                                    h2 {
+                                                        font-size: 22px;
+                                                          }
+
+                                                            body,
+                                                              p,
+                                                                label,
+                                                                  select,
+                                                                    input,
+                                                                      textarea,
+                                                                        button {
+                                                                            font-size: 18px;
+                                                                              }
+
+                                                                                .card {
+                                                                                    padding: 20px;
+                                                                                      }
+                                                                                      }
+                                            
+                                                                                      /* Improve readability of supporting text */
+                                                                                      .hero p,
+                                                                                      .card p,
+                                                                                      .card label,
+                                                                                      .card input[type="file"] {
+                                                                                        font-size: 18px;
+                                                                                          line-height: 1.7;
+                                                                                          }
+
+                                                                                          textarea::placeholder {
+                                                                                            font-size: 17px;
+                                                                                              opacity: 1;
+                                                                                              }
+
+                                                                                              button {
+                                                                                                font-size: 19px;
+                                                                                                }
+
+                                                                                                audio {
+                                                                                                  max-width: 100%;
+                                                                                                  }
+/* Accessibility: larger text and easier-to-tap controls */
+h1 {
+font-size: 32px;
+}
+
+h2 {
+font-size: 24px;
+}
+
+label {
+font-size: 18px;
+font-weight: 600;
+}
+
+button {
+font-size: 18px;
+min-height: 56px;
+padding: 16px;
+}
+
+select,
+input[type="file"] {
+font-size: 18px;
+min-height: 52px;
+}
+
+.subtitle,
+.card p {
+font-size: 17px;
+line-height: 1.6;
+}
+/* Comfortable reading and writing */
+textarea {
+font-size: 19px;
+line-height: 1.7;
+padding: 18px;
+min-height: 180px;
+color: #17201d;
+}
+
+textarea::placeholder {
+color: #626b66;
+opacity: 1;
+}
+
+button:disabled {
+opacity: 0.65;
+cursor: wait;
+}
+
+#audio {
+min-height: 54px;
+}
+/* Clear, readable status messages */
+#status,
+#recordStatus,
+#uploadStatus {
+font-size: 18px;
+line-height: 1.6;
+font-weight: 600;
+color: #176b46;
+overflow-wrap: anywhere;
+margin-top: 14px;
+margin-bottom: 14px;
+}
+
+textarea,
+select,
+input[type="file"] {
+width: 100%;
+border: 1px solid #cbd5ce;
+border-radius: 12px;
+}
+
+button {
+border-radius: 12px;
+line-height: 1.4;
+cursor: pointer;
+}
+
+button:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+input:focus-visible {
+outline: 3px solid #d7b85a;
+outline-offset: 3px;
+}
+/* Quick navigation menu */
+.quick-nav {
+display: flex;
+flex-wrap: wrap;
+gap: 12px;
+margin: 18px 0 24px;
+padding: 14px;
+background: #e7efe9;
+border: 1px solid #d3e1d7;
+border-radius: 16px;
+}
+
+.quick-nav a {
+display: flex;
+align-items: center;
+justify-content: center;
+flex: 1 1 150px;
+min-height: 54px;
+padding: 12px 16px;
+background: #176b46;
+color: #ffffff;
+text-decoration: none;
+text-align: center;
+font-size: 18px;
+font-weight: 700;
+line-height: 1.4;
+border-radius: 12px;
+}
+
+.quick-nav a:active {
+background: #104d33;
+}
+
+html {
+scroll-behavior: smooth;
+}
+
+section.card {
+scroll-margin-top: 18px;
+}
+/* Separate tool screens */
+.hero[hidden],
+.quick-nav[hidden],
+.tool-screen[hidden],
+#homeBtn[hidden] {
+  display: none !important;
+}
+
+#homeBtn {
+  margin: 0 0 18px;
+}
