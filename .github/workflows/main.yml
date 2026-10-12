@@ -35,10 +35,10 @@ jobs:
           npx cap init "Luganda AI Studio" "com.openuse9.lugandaai" --web-dir frontend
           npx cap add android
           npx cap sync android
-
-      - name: Align Kotlin libraries
-        run: |
-          find android -name "*.gradle" -type f -exec sed -i 's/kotlin-stdlib-jdk8:1.6.21/kotlin-stdlib-jdk8:1.8.22/g' {} +
+ 
+       - name: Align Kotlin libraries 
+    run: |
+      find android -name "*.gradle" -type f -exec sed -i 's/kotlin-stdlib-jdk7:1.6.21/kotlin-stdlib-jdk7:1.8.22/g; s/kotlin-stdlib-jdk8:1.6.21/kotlin-stdlib-jdk8:1.8.22/g' {} +
 
       - name: Build APK
         run: |
