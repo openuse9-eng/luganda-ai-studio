@@ -26,20 +26,27 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install project dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build Android APK
+      - name: Create Android project
         run: |
           npm install @capacitor/core @capacitor/cli @capacitor/android
           npx cap init "Luganda AI Studio" "com.openuse9.lugandaai" --web-dir frontend
           npx cap add android
           npx cap sync android
+
+      - name: Align Kotlin libraries
+        run: |
+          find android -name "*.gradle" -type f -exec sed -i 's/kotlin-stdlib-jdk8:1.6.21/kotlin-stdlib-jdk8:1.8.22/g' {} +
+
+      - name: Build APK
+        run: |
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Save APK for download
+      - name: Save APK
         uses: actions/upload-artifact@v4
         with:
           name: luganda-ai-studio-apk
