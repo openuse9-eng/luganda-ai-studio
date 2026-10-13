@@ -1,5 +1,5 @@
-      - name: Build APK
-      - name: Build APK
+name: Build Luganda AI Studio APK
+
 name: Build Luganda AI Studio APK
 
 'on':
@@ -40,15 +40,14 @@ jobs:
           npx cap add android
           npx cap sync android
 
+      - name: Add Android microphone permission
+        run: |
+          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.RECORD_AUDIO" />' android/app/src/main/AndroidManifest.xml
+
       - name: Align Kotlin libraries
         run: |
           find android -name "*.gradle" -type f -exec sed -i 's/kotlin-stdlib-jdk7:1.6.21/kotlin-stdlib-jdk7:1.8.22/g; s/kotlin-stdlib-jdk8:1.6.21/kotlin-stdlib-jdk8:1.8.22/g' {} +
           sed -i '/dependencies {/a\    configurations.configureEach {\n        resolutionStrategy.eachDependency {\n            if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {\n                useVersion "1.8.22"\n            }\n        }\n    }' android/app/build.gradle
-
-                - name: Add Android microphone permission
-                        run: |
-                                  sed -i '/<manifest/a\    <uses-permission android:name="android.permission.RECORD_AUDIO" />' android/app/src/main/AndroidManifest.xml
-                                  
 
       - name: Build APK
         run: |
