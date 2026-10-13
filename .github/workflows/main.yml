@@ -30,7 +30,7 @@ jobs:
         run: npm ci
 
       - name: Install Capacitor
-        run: npm install --no-save @capacitor/core @capacitor/cli @capacitor/android
+        run: npm install --no-save @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6
 
       - name: Create Android project
         run: |
@@ -41,6 +41,7 @@ jobs:
       - name: Add Android microphone permission
         run: |
           sed -i '/<manifest/a\    <uses-permission android:name="android.permission.RECORD_AUDIO" />' android/app/src/main/AndroidManifest.xml
+          sed -i '/<manifest/a\    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />' android/app/src/main/AndroidManifest.xml
 
       - name: Align Kotlin libraries
         run: |
