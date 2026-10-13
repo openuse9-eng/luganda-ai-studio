@@ -48,6 +48,37 @@ jobs:
           find android -name "*.gradle" -type f -exec sed -i 's/kotlin-stdlib-jdk7:1.6.21/kotlin-stdlib-jdk7:1.8.22/g; s/kotlin-stdlib-jdk8:1.6.21/kotlin-stdlib-jdk8:1.8.22/g' {} +
           sed -i '/dependencies {/a\    configurations.configureEach {\n        resolutionStrategy.eachDependency {\n            if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {\n                useVersion "1.8.22"\n            }\n        }\n    }' android/app/build.gradle
 
+      - name: Configure Android microphone handler
+        run: |
+          mkdir -p android/app/src/main/java/com/openuse9/lugandaai
+          cat > android/app/src/main/java/com/openuse9/lugandaai/MainActivity.java <<'JAVA'
+          package com.openuse9.lugandaai;
+
+          import android.Manifest;
+          import android.content.pm.PackageManager;
+          import android.webkit.PermissionRequest;
+          import com.getcapacitor.BridgeActivity;
+
+          public class MainActivity extends BridgeActivity {
+              @Override
+              public void onPermissionRequest(PermissionRequest request) {
+                  runOnUiThread(() -> {
+                      boolean microphoneRequested = false;
+                      for (String resource : request.getResources()) {
+                          if (PermissionRequest.RESOURCE_AUDIO_CAPTURE.equals(resource)) {
+                              microphoneRequested = true;
+                          }
+                      }
+                      if (microphoneRequested && checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                          request.grant(new String[] { PermissionRequest.RESOURCE_AUDIO_CAPTURE });
+                      } else {
+                          request.deny();
+                      }
+                  });
+              }
+          }
+          JAVA
+
       - name: Build APK
         run: |
           cd android
