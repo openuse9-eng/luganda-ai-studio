@@ -137,7 +137,8 @@ recordBtn.addEventListener("click", async () => {
       console.error(error);
 
       recordStatus.textContent =
-        "Microphone permission is required.";
+        "Microphone error: " + (error.name || "Error") + " — " + (error.message || "Unknown error");
+      alert("Microphone error: " + (error.name || "Error") + " — " + (error.message || "Unknown error"));
     }
 
   } else {
