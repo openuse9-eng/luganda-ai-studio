@@ -1,3 +1,4 @@
+const API_BASE_URL = "https://luganda-ai-studio-api.onrender.com";
 const textInput = document.getElementById("text");
 const speakBtn = document.getElementById("speakBtn");
 const voiceSelect = document.getElementById("voice");
@@ -17,7 +18,7 @@ speakBtn.addEventListener("click", async () => {
   audio.removeAttribute("src");
 
   try {
-    const response = await fetch("/api/tts", {
+    const response = await fetch(API_BASE_URL + "/api/tts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -88,7 +89,7 @@ recordBtn.addEventListener("click", async () => {
         recordStatus.textContent = "Transcribing Luganda...";
 
         try {
-          const response = await fetch("/api/stt", {
+          const response = await fetch(API_BASE_URL + "/api/stt", {
             method: "POST",
             body: formData
           });
@@ -171,7 +172,7 @@ transcribeBtn.addEventListener("click", async () => {
   uploadTranscript.value = "";
 
   try {
-    const response = await fetch("/api/stt", {
+    const response = await fetch(API_BASE_URL + "/api/stt", {
       method: "POST",
       body: formData
     });
@@ -285,7 +286,7 @@ homeBtn.addEventListener("click", showHome);
         output.value = "";
 
         try {
-            const response = await fetch("/api/translate", {
+            const response = await fetch(API_BASE_URL + "/api/translate", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -344,7 +345,7 @@ homeBtn.addEventListener("click", showHome);
                 const voice =
                     document.getElementById("voice")?.value || "salt_lug_0001";
 
-                const response = await fetch("/api/tts", {
+                const response = await fetch(API_BASE_URL + "/api/tts", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ text, voice })
